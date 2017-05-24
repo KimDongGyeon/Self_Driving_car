@@ -1,54 +1,60 @@
-const int DST_TRIGGER = 2;
-const int DST_ECHO = 3;
-
-int MOTOR_OUT_3 = 5;
-int MOTOR_OUT_4 = 4;
+int echo = 8, trig = 9;
+int ADir = 4, BDir = 7;
+int APWM = 5, BPWM = 6;
 
 void setup() {
-  pinMode(DST_TRIGGER, OUTPUT);
-  pinMode(DST_ECHO, INPUT);
- 
-  pinMode(MOTOR_OUT_3, OUTPUT);
-  pinMode(MOTOR_OUT_4, OUTPUT);
-
+  pinMode(echo,INPUT);
+  pinMode(trig,OUTPUT);
+  pinMode(ADir,OUTPUT);
+  pinMode(BDir,OUTPUT);
   Serial.begin(9600);
 }
 
 void loop() {
-  int mesafe = mesafe_olc();
+  int dist = ultrasonic(echo,trig);
+  int speed = 255;
+  
+  Serial.println(dist);
 
-  if(mesafe > 0 && mesafe < 10){
-    geri();
+  if(dist>30) {Forward(speed);}
+  
+  else if(30>=dist>25) {
+    for(;dist=26;){
+      Forward(speed);
+      speed-=5;
+    }
   }
-  else{
-    ileri();
+
+  else if(dist>20) {Backward(speed);}
+
+  else if(dist<25) {
+    for(;dist=24;)
+    {
+      Backward(speed);
+      speed-=3;
+    }
   }
+  
+  else{Forward(0);}
+  
 }
 
-int mesafe_olc() {
-  digitalWrite(DST_TRIGGER, HIGH);
-  delayMicroseconds(500);
-  digitalWrite(DST_TRIGGER, LOW);
- 
-  int sure = pulseIn(DST_ECHO, HIGH);
-  int mesafe_cm = (sure/2) / 29.1;
-
-  // log
-  Serial.print("Mesafe: ");
-  Serial.print(mesafe_cm);
-  Serial.print(" cm \n");
-
-  return mesafe_cm;
+int ultrasonic(int echo, int trig)
+{
+  int distance;
+  digitalWrite(trig, HIGH);delay(2);
+  digitalWrite(trig, LOW);
+  distance = pulseIn(echo,HIGH)/58;
+  return distance;
 }
+    void Forward(int vel){
+      digitalWrite(ADir,HIGH);
+      digitalWrite(BDir,LOW);
+      analogWrite(APWM,vel);
+      analogWrite(BPWM,vel);}
 
-void ileri() {
-  digitalWrite(MOTOR_OUT_3, HIGH);
-  digitalWrite(MOTOR_OUT_4, LOW);
-}
-
-void geri() {
-  digitalWrite(MOTOR_OUT_3, LOW);
-  digitalWrite(MOTOR_OUT_4, HIGH);
-}
- 
-Contact GitHub 
+      void Backward(int vel){
+      digitalWrite(ADir,LOW);
+      digitalWrite(BDir,HIGH);
+      analogWrite(APWM,vel);
+      analogWrite(BPWM,vel);}
