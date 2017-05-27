@@ -25,9 +25,9 @@ void loop() {
     }
   }
 
-  else if(dist>20) {Backward(speed);}
+  else if(dist<20) {Backward(speed);}
 
-  else if(dist<25) {
+  else if(20<=dist<25) {
     for(;dist=24;)
     {
       Backward(speed);
