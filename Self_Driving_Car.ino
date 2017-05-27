@@ -22,10 +22,10 @@ void loop() {
   else if(27>=d>26) {Forward(235);}
   else if(26>=d>25) {Forward(200);}
   else if(20>d) {Backward(255);}
-  else if(21>=d>22) {Backward(255);}
-  else if(22>=d>23) {Backward(250);}
-  else if(23>=d>24) {Backward(249);}
-  else if(24>=d) {Backward(245);}
+  else if(21<=d<22) {Backward(255);}
+  else if(22<=d<23) {Backward(250);}
+  else if(23<=d<24) {Backward(249);}
+  else if(24<=d) {Backward(245);}
   else {Forward(0);}
   }
 
