@@ -22,6 +22,7 @@ void loop() {
     for(;dist=26;){
       Forward(speed);
       speed-=5;
+      Serial.println(dist);
     }
   }
 
@@ -30,8 +31,10 @@ void loop() {
   else if(20<=dist<25) {
     for(;dist=24;)
     {
-      Backward(speed);
+      Backward(speed)
+      ;
       speed-=3;
+      Serial.println(dist);
     }
   }
   
